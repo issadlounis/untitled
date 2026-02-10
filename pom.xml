@@ -97,9 +97,6 @@
         </plugins>
     </build>
 
-
-
-
     <distributionManagement>
         <repository>
             <id>myMavenRepo.write</id>
