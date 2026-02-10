@@ -11,8 +11,10 @@ pipeline {
         }
 
         stage('cucumber') {
-            cucumber reportTitle: 'API Report',
-                    fileIncludePattern: 'target/example-report.json'
+            steps {
+                cucumber reportTitle: 'API Report',
+                        fileIncludePattern: 'target/example-report.json'
+            }
         }
 
         stage('jacoco') {
