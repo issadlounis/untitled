@@ -10,12 +10,12 @@ pipeline {
             }
         }
 
-        stage('Cucumber') {
+        stage('cucumber') {
             cucumber reportTitle: 'API Report',
                     fileIncludePattern: 'target/example-report.json'
         }
 
-        stage('Jacoco') {
+        stage('jacoco') {
             steps {
 
                 recordCoverage(tools: [[parser: 'JACOCO']],
