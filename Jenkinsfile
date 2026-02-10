@@ -32,20 +32,5 @@ pipeline {
             }
         }
 
-        stage('publish report') {
-            steps {
-
-                publishHTML([
-                    allowMissing: false,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'target/site/apidocs',
-                    reportFiles: 'index.html',
-                    reportName: 'Documentation'
-                ])
-
-            }
-        }
-
     }
 }
