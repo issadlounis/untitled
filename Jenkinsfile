@@ -70,10 +70,10 @@ pipeline {
                 bat 'git tag -a v%VERSION% -m "Release version %VERSION%"'
                 bat 'git push origin v%VERSION%'
 
-                withCredentials([string(credentialsId: 'untitled_token', variable: 'UNTITLED_TOKEN')]) {
+                withCredentials([string(credentialsId: 'untitled_token', variable: 'GITHUB_TOKEN')]) {
                     bat """
                         curl -X POST https://api.github.com/repos/issadlounis/untitled/releases ^
-                        -H "Authorization: Bearer %UNTITLED_TOKEN%" ^
+                        -H "Authorization: Bearer %GITHUB_TOKEN%" ^
                         -H "Accept: application/vnd.github+json" ^
                         -H "Content-Type: application/json" ^
                         -d "{
