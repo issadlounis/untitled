@@ -76,12 +76,12 @@ pipeline {
             }
         }
 
-        stage('tag') {
+        stage('tag & release') {
             steps {
                 bat 'git tag -a v%VERSION% -m "Release version %VERSION%"'
                 bat 'git push origin v%VERSION%'
 
-                bat '''
+                /*bat '''
                     curl -X POST https://api.github.com/repos/issadlounis/untitled/releases \
                       -H "Authorization: Bearer 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" \
                       -H "Accept: application/vnd.github+json" \
@@ -94,7 +94,17 @@ pipeline {
                         "prerelease": false
                       }'
 
-                '''
+                '''*/
+
+
+                    bat """
+                        curl -X POST https://api.github.com/repos/issadlounis/untitled/releases ^
+                        -H "Authorization: Bearer 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" ^
+                        -H "Accept: application/vnd.github+json" ^
+                        -H "Content-Type: application/json" ^
+                        -d "{\\"tag_name\\":\\"v%VERSION%\\",\\"name\\":\\"Release v%VERSION%\\",\\"body\\":\\"Production release\\",\\"draft\\":false,\\"prerelease\\":false}"
+                    """
+
             }
         }
 
