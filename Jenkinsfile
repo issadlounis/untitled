@@ -80,6 +80,21 @@ pipeline {
             steps {
                 bat 'git tag -a v%VERSION% -m "Release version %VERSION%"'
                 bat 'git push origin v%VERSION%'
+
+                bat '''
+                    curl -X POST https://api.github.com/repos/issadlounis/untitled/releases \
+                      -H "Authorization: Bearer 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" \
+                      -H "Accept: application/vnd.github+json" \
+                      -H "Content-Type: application/json" \
+                      -d '{
+                        "tag_name": "v1.0",
+                        "name": "Release v1.0",
+                        "body": "Production release",
+                        "draft": false,
+                        "prerelease": false
+                      }'
+
+                '''
             }
         }
 
