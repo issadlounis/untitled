@@ -38,6 +38,7 @@ pipeline {
             }
         }
 
+
         stage('slack') {
             steps {
                 bat '''
