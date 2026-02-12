@@ -39,16 +39,18 @@ pipeline {
         }
 
 
-        stage('slack') {
-            steps {
-                bat '''
-                    curl -s -X POST \
-                    -H 'Content-type: application/json' \
-                     --data '{"text":"Deploying!"}' \
-                     "$SLACK_WEBHOOK"
-                '''
-            }
-        }
+stage('slack') {
+    steps {
+        powershell """
+        Invoke-RestMethod `
+            -Uri $env:SLACK_WEBHOOK `
+            -Method Post `
+            -Body '{"text":"Deploying!"}' `
+            -ContentType 'application/json'
+        """
+    }
+}
+
 
     }
 }
