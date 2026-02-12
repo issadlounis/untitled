@@ -41,7 +41,7 @@ pipeline {
 
         stage('slack') {
             steps {
-                bat '''
+                powershell '''
                     curl -s -X POST \
                     -H 'Content-type: application/json' \
                      --data '{"text":"Deploying!"}' \
