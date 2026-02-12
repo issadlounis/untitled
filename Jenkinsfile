@@ -56,23 +56,30 @@ pipeline {
 
                 stage('notification') {
                     steps {
-                        post {
-                            failure {
+                        /*post {
+                            failure {*/
                                         mail(subject: "Notification Slack",
-                                                body: "Message non envoyé",
+                                                body: "Message envoyé",
                                                 to: "louniscntsid@gmail.com"
-                                                )
-                            }
+                                        )
+                            /*}
 
                             success {
                                        mail(subject: "Notification Slack",
                                                body: "Message envoyé",
                                                to: "louniscntsid@gmail.com"
-                                               )
+                                       )
                             }
-                        }
+                        }*/
                     }
                 }
+            }
+        }
+
+        stage('tag') {
+            steps {
+                bat 'git tag -a v%VERSION% -m "Release version %VERSION%"'
+                bat 'git push origin v%VERSION%'
             }
         }
 
