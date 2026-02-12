@@ -39,14 +39,40 @@ pipeline {
         }
 
 
-        stage('slack') {
-            steps {
-                bat """
-                    curl -X POST ^
-                    -H "Content-type: application/json" ^
-                    --data "{\\"text\\":\\"Deploying!!!\\"}" ^
-                    %SLACK_WEBHOOK%
-                """
+
+
+        stage('Slack & Notification') {
+            parallel {
+                stage('slack') {
+                    steps {
+                        bat """
+                            curl -X POST ^
+                            -H "Content-type: application/json" ^
+                            --data "{\\"text\\":\\"Hello World!\\"}" ^
+                            %SLACK_WEBHOOK%
+                        """
+                    }
+                }
+
+                stage('notification') {
+                    steps {
+                        post {
+                            failure {
+                                        mail(subject: "Notification Slack",
+                                                body: "Message non envoyé",
+                                                to: "louniscntsid@gmail.com"
+                                                )
+                            }
+
+                            success {
+                                       mail(subject: "Notification Slack",
+                                               body: "Message envoyé",
+                                               to: "louniscntsid@gmail.com"
+                                               )
+                            }
+                        }
+                    }
+                }
             }
         }
 
