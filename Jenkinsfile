@@ -49,13 +49,5 @@ pipeline {
             }
         }
 
-        /*stage('slack') {
-            steps {
-                bat '''
-                curl -X POST -H 'Content-type: application/json' --data '{"text":"Hello, World!"}' https://hooks.slack.com/services/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
-                '''
-            }
-        }*/
-
     }
 }
