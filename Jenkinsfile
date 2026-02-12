@@ -87,8 +87,8 @@ pipeline {
                       -H "Accept: application/vnd.github+json" \
                       -H "Content-Type: application/json" \
                       -d '{
-                        "tag_name": "v1.0",
-                        "name": "Release v1.0",
+                        "tag_name": "v%VERSION%",
+                        "name": "Release v%VERSION%",
                         "body": "Production release",
                         "draft": false,
                         "prerelease": false
