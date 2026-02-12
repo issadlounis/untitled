@@ -56,54 +56,35 @@ pipeline {
 
                 stage('notification') {
                     steps {
-                        /*post {
-                            failure {*/
-                                        mail(subject: "Notification Slack",
-                                                body: "Message envoyé",
-                                                to: "louniscntsid@gmail.com"
-                                        )
-                            /*}
-
-                            success {
-                                       mail(subject: "Notification Slack",
-                                               body: "Message envoyé",
-                                               to: "louniscntsid@gmail.com"
-                                       )
-                            }
-                        }*/
+                        mail(subject: "Notification Slack",
+                                body: "Message envoyé",
+                                to: "louniscntsid@gmail.com"
+                        )
                     }
                 }
             }
         }
 
-        stage('tag & release') {
+        stage('Tag & Release') {
             steps {
                 bat 'git tag -a v%VERSION% -m "Release version %VERSION%"'
                 bat 'git push origin v%VERSION%'
 
-                /*bat '''
-                    curl -X POST https://api.github.com/repos/issadlounis/untitled/releases \
-                      -H "Authorization: Bearer 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" \
-                      -H "Accept: application/vnd.github+json" \
-                      -H "Content-Type: application/json" \
-                      -d '{
-                        "tag_name": "v%VERSION%",
-                        "name": "Release v%VERSION%",
-                        "body": "Production release",
-                        "draft": false,
-                        "prerelease": false
-                      }'
-
-                '''*/
-
-
+                withCredentials([string(credentialsId: 'untitled_token', variable: 'UNTITLED_TOKEN')]) {
                     bat """
                         curl -X POST https://api.github.com/repos/issadlounis/untitled/releases ^
-                        -H "Authorization: Bearer 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" ^
+                        -H "Authorization: Bearer %UNTITLED_TOKEN%" ^
                         -H "Accept: application/vnd.github+json" ^
                         -H "Content-Type: application/json" ^
-                        -d "{\\"tag_name\\":\\"v%VERSION%\\",\\"name\\":\\"Release v%VERSION%\\",\\"body\\":\\"Production release\\",\\"draft\\":false,\\"prerelease\\":false}"
+                        -d "{
+                            \\"tag_name\\":\\"v%VERSION%\\",
+                            \\"name\\":\\"Release v%VERSION%\\",
+                            \\"body\\":\\"Production release\\",
+                            \\"draft\\":false,
+                            \\"prerelease\\":false
+                        }"
                     """
+                }
 
             }
         }
