@@ -48,7 +48,7 @@ pipeline {
                         bat """
                             curl -X POST ^
                             -H "Content-type: application/json" ^
-                            --data "{\\"text\\":\\"Hello World!\\"}" ^
+                            --data "{\\"text\\":\\"Hello World!!!\\"}" ^
                             %SLACK_WEBHOOK%
                         """
                     }
