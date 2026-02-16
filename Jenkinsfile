@@ -19,7 +19,6 @@ pipeline {
 
         stage('jacoco') {
             steps {
-
                 recordCoverage(tools: [[parser: 'JACOCO']],
                         id: 'jacoco', name: 'JaCoCo Coverage',
                         sourceCodeRetention: 'EVERY_BUILD',
@@ -28,7 +27,6 @@ pipeline {
                             [threshold: 60.0, metric: 'BRANCH', baseline: 'PROJECT', unstable: true]
                         ]
                 )
-
             }
         }
 
@@ -76,7 +74,6 @@ pipeline {
                         -d "{\\"tag_name\\":\\"v%VERSION%\\",\\"name\\":\\"Release v%VERSION%\\",\\"body\\":\\"Production release\\",\\"draft\\":false,\\"prerelease\\":false}"
                     """
                 }
-
             }
         }
 
