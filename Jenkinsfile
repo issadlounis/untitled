@@ -38,9 +38,6 @@ pipeline {
             }
         }
 
-
-
-
         stage('Slack & Notification') {
             parallel {
                 stage('slack') {
